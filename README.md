@@ -15,7 +15,7 @@
 
 
 ## 2. 用法
-注意，不管使用如下那种方式都需根据实际情况，修改config/config.yaml文件中的配置。
+注意，不管使用如下哪种方式都需根据实际情况，修改config/config.yaml文件中的配置。
 
 ### 2.1 源码
 需要go环境
@@ -47,5 +47,22 @@ Account: xxx@xxx.com
 Password: 1234qwer!@#$
 Please change your password after login
 ```
+
+## 3. TODO
+1. 用户表中的_id值，目前使用随机生成的100以内整数。
+参照[Yapi源码](https://github.com/YMFE/yapi/blob/master/server/models/base.js)，发现创建用户时_id并不是每次加1的顺序增长。
+```
+    if (this.isNeedAutoIncrement() === true) {
+      this.schema.plugin(autoIncrement.plugin, {
+        model: this.name,
+        field: this.getPrimaryKey(),
+        startAt: 11,
+        incrementBy: yapi.commons.rand(1, 10)
+      });
+    }
+```
+
+2. 使用了固定的密码，需用户登录后修改密码。
+
 
 
