@@ -65,5 +65,6 @@ Currently it uses randomly generated integers within 100.
 ```
 
 2. A fixed password is used, which needs to be changed after the user login.
+3. Securely remove users.
 
 
