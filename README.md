@@ -13,9 +13,8 @@ The downside is that there is no entry point for the administrator to add users,
 4. modify the configuration to close the user registration again `"closeRegister":true` 
 6. restart the service again
 
-As we can see from the above steps, a single user creation operation requires two times service restart. This is obviously not very convenient (reasonable).
-If you can login to the server where the Yapi database is situated, or if you have access to the Yapi database, it would be very convenient to manage users directly in the database. It would be great if we could eliminate the need to spell out the database statements to create users and achieve the above function with a single command.
-
+As we can see, a user creation operation, which requires restarting the service twice, and seriously affect the normal use of the user, which is obviously not (very) very (not) convenient (reasonable).
+If you can login the server where the Yapi database is located, or you have Yapi database privileges, it becomes very convenient to manage users directly in the database. It would be great if the database statement that spells out the creation of users could be eliminated and the above function could be achieved with a single command.
 
 ## 2. Usage
 Note that the configuration in the config/config.yaml file needs to be modified according to the actual situation, no matter which of the following methods is used.
