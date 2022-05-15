@@ -21,10 +21,10 @@ func InitConfig() {
 
 func GetMongoUri() string {
 	InitConfig()
-	host := viper.GetString("apidoc.host")
-	port := viper.GetString("apidoc.port")
-	user := viper.GetString("apidoc.user")
-	password := viper.GetString("apidoc.password")
+	host := viper.GetString("yapi.db.host")
+	port := viper.GetString("yapi.db.port")
+	user := viper.GetString("yapi.db.user")
+	password := viper.GetString("yapi.db.password")
 	mongoUri := ""
 	if user == "" || password == "" {
 		mongoUri = "mongodb://" + host + ":" + port
@@ -38,6 +38,6 @@ func GetMongoUri() string {
 
 func GetDBName() string {
 	InitConfig()
-	// db := viper.GetString("apidoc.db")
-	return viper.GetString("apidoc.db")
+	// db := viper.GetString("yapi.db")
+	return viper.GetString("yapi.db.name")
 }

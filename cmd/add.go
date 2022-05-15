@@ -36,8 +36,8 @@ func NewAddUserCommand() *cobra.Command {
 		Use:   "user",
 		Short: "Add user to yapi",
 		Long: `For example:
-yapi-user-operator add user -u xxx@yapi.org
-yapi-user-operator add user --userName xxx@yapi.org`,
+yapi-user-operator add user -u xxx@xxx.xxx
+yapi-user-operator add user --userName xxx@xxx.xxx`,
 		Run: func(cmd *cobra.Command, args []string) {
 			if userName == "" {
 				fmt.Println("userName is required")

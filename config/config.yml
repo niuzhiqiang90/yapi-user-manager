@@ -1,6 +1,7 @@
-apidoc:
-  db: yapi
-  host: 127.0.0.1
-  port: 27017
-  user: 
-  password:
+yapi:
+  db: 
+    name: yapi
+    host: 127.0.0.1
+    port: 27017
+    user: 
+    password:
