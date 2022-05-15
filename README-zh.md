@@ -35,8 +35,8 @@ Please change your password after login
 ### 2.2 二进制包
 从[这里](https://github.com/niuzhiqiang90/yapi-user-operator/releases)下载二进制包。
 ```
-tar -zxvf yapi-user-operator-linux-xxxx.tar.gz
-cd yapi-user-operator-linux-v0.0.1
+tar -zxvf yapi-user-operator-linux-<version>.tar.gz
+cd yapi-user-operator-linux-<version>
 chmod +x yapi-user-operator
 ./yapi-user-operator add user -u xxx@xxx.com
 ```
