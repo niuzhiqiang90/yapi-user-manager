@@ -1,5 +1,5 @@
-# yapi-user-operator
-yapi-user-operator是一个简单、方便、快捷的管理yapi用户的命令行工具。
+# yapi-user-manager 
+yapi-user-manager是一个简单、方便、快捷的管理yapi用户的命令行工具。
 
 [English](./README.md)
 
@@ -23,8 +23,8 @@ yapi-user-operator是一个简单、方便、快捷的管理yapi用户的命令�
 ### 2.1 源码
 需要go环境
 ```
-git clone https://github.com/niuzhiqiang90/yapi-user-operator.git
-cd yapi-user-operator
+git clone https://github.com/niuzhiqiang90/yapi-user-manager.git
+cd yapi-user-manager 
 go run main.go add user -u xxx@xxx.com
 ```
 输出
@@ -36,12 +36,12 @@ Please change your password after login
 ```
 
 ### 2.2 二进制包
-从[这里](https://github.com/niuzhiqiang90/yapi-user-operator/releases)下载二进制包。
+从[这里](https://github.com/niuzhiqiang90/yapi-user-manager/releases)下载二进制包。
 ```
-tar -zxvf yapi-user-operator-linux-<version>.tar.gz
-cd yapi-user-operator-linux-<version>
-chmod +x yapi-user-operator
-./yapi-user-operator add user -u xxx@xxx.com
+tar -zxvf yapi-user-manager -linux-<version>.tar.gz
+cd yapi-user-manager -linux-<version>
+chmod +x yapi-user-manager 
+./yapi-user-manager add user -u xxx@xxx.com
 ```
 输出
 ```

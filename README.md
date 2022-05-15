@@ -1,5 +1,5 @@
-# yapi-user-operator
-yapi-user-operator is a simple, easy and fast command line tool for managing yapi users.
+# yapi-user-manager 
+yapi-user-manager is a simple, easy and fast command line tool for managing yapi users.
 
 [中文](./README-zh.md)
 
@@ -23,8 +23,8 @@ Note that the configuration in the config/config.yaml file needs to be modified 
 Golang environment is required.
 
 ```
-git clone https://github.com/niuzhiqiang90/yapi-user-operator.git
-cd yapi-user-operator
+git clone https://github.com/niuzhiqiang90/yapi-user-manager.git
+cd yapi-user-manager 
 go run main.go add user -u xxx@xxx.com
 ```
 Output
@@ -36,12 +36,12 @@ Please change your password after login
 ```
 
 ### 2.2 Binary
-Download directly from [here](https://github.com/niuzhiqiang90/yapi-user-operator/releases).
+Download directly from [here](https://github.com/niuzhiqiang90/yapi-user-manager/releases).
 ```
-tar -zxvf yapi-user-operator-linux-<version>.tar.gz
-cd yapi-user-operator-linux-<version>
-chmod +x yapi-user-operator
-./yapi-user-operator add user -u xxx@xxx.com
+tar -zxvf yapi-user-manager -linux-<version>.tar.gz
+cd yapi-user-manager -linux-<version>
+chmod +x yapi-user-manager 
+./yapi-user-manager add user -u xxx@xxx.com
 ```
 Output
 ```
