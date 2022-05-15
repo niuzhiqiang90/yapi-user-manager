@@ -37,8 +37,8 @@ Please change your password after login
 ### 2.2 Binary
 Download directly from [here](https://github.com/niuzhiqiang90/yapi-user-operator/releases).
 ```
-tar -zxvf yapi-user-operator-linux-xxxx.tar.gz
-cd yapi-user-operator-linux-v0.0.1
+tar -zxvf yapi-user-operator-linux-<version>.tar.gz
+cd yapi-user-operator-linux-<version>
 chmod +x yapi-user-operator
 ./yapi-user-operator add user -u xxx@xxx.com
 ```
