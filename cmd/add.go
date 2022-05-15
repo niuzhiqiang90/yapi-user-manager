@@ -35,7 +35,7 @@ func NewAddUserCommand() *cobra.Command {
 		Use:   "user",
 		Short: "Add yapi user by user's email.",
 		Long: `Add yapi user by user's email.
-		
+
 For example:
 yapi-user-operator add user -u xxx@xxx.xxx
 yapi-user-operator add user --userName xxx@xxx.xxx`,
@@ -92,7 +92,7 @@ func addUser() {
 		}
 
 		if res != nil {
-			fmt.Println("Add user successfully")
+			fmt.Println("Add user successfully.")
 			fmt.Println("Account:", userName)
 			fmt.Println("Password: 1234qwer!@#$")
 			fmt.Println("Please change your password after login.")

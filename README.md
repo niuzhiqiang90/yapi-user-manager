@@ -30,7 +30,7 @@ go run main.go add user -u xxx@xxx.com
 ```
 Output
 ```
-Add user success
+Add user successfully.
 Account: xxx@xxx.com
 Password: 1234qwer!@#$
 Please change your password after login
@@ -46,7 +46,7 @@ chmod +x yapi-user-operator
 ```
 Output
 ```
-Add user success
+Add user successfully.
 Account: xxx@xxx.com
 Password: 1234qwer!@#$
 Please change your password after login.
