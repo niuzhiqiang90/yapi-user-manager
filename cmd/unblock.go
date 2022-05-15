@@ -35,8 +35,8 @@ func NewUnBlockUserCommand() *cobra.Command {
 		Use:   "user",
 		Short: "UnBlock user to yapi",
 		Long: `For example:
-yapi-user-operator unblock user -u xxx@xxx.xxx
-yapi-user-operator unblock user --userName xxx@xxx.xxx`,
+yapi-user-manager unblock user -u xxx@xxx.xxx
+yapi-user-manager unblock user --userName xxx@xxx.xxx`,
 		Run: func(cmd *cobra.Command, args []string) {
 			if userName == "" {
 				fmt.Println("userName is required")

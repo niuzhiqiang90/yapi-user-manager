@@ -8,6 +8,7 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"strings"
 	"time"
 
 	"github.com/niuzhiqiang90/yapi-user-operator/config"
@@ -36,8 +37,8 @@ func NewDeleteUserCommand() *cobra.Command {
 		Long: `Delete yapi user by userName.
 
 For example:
-yapi-user-operator delete user -u xxx@xxx.xxx
-yapi-user-operator delete user --userName xxx@xxx.xxx`,
+yapi-user-manager delete user -u xxx@xxx.xxx
+yapi-user-manager delete user --userName xxx@xxx.xxx`,
 		Run: func(cmd *cobra.Command, args []string) {
 			if userName == "" {
 				fmt.Println("userName is required")
@@ -77,9 +78,11 @@ func deleteUser() {
 	if err != nil {
 		// ErrNoDocuments means that the filter did not match any documents in
 		// the collection.
-		if err == mongo.ErrNoDocuments {
+		if err == mongo.ErrNoDocuments && strings.Contains(err.Error(), "mongo: no documents in result") {
+			fmt.Printf("Account %s does not exists. \n", userName)
 			return
 		}
+
 		log.Fatal(err)
 	}
 	fmt.Printf("Account %s deleted.\n", userName)

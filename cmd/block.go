@@ -37,8 +37,8 @@ func NewBlockUserCommand() *cobra.Command {
 		Long: `Block yapi user by userName.
 
 For example:
-yapi-user-operator block user -u xxx@xxx.xxx
-yapi-user-operator block user --userName xxx@xxx.xxx`,
+yapi-user-manager block user -u xxx@xxx.xxx
+yapi-user-manager block user --userName xxx@xxx.xxx`,
 		Run: func(cmd *cobra.Command, args []string) {
 			if userName == "" {
 				fmt.Println("userName is required")
