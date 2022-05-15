@@ -52,21 +52,4 @@ Password: 1234qwer!@#$
 Please change your password after login.
 ```
 
-## 3. TODO
-1. The _id value in the user table, referring to [Yapi source code](https://github.com/YMFE/yapi/blob/master/server/models/base.js), found that the _id does not grow sequentially by adding 1 each time when creating a user.  
-Currently it uses randomly generated integers within 100.
-```
-    if (this.isNeedAutoIncrement() === true) {
-      this.schema.plugin(autoIncrement.plugin, {
-        model: this.name,
-        field: this.getPrimaryKey(),
-        startAt: 11,
-        incrementBy: yapi.commons.rand(1, 10)
-      });
-    }
-```
-
-2. A fixed password is used, which needs to be changed after the user login.
-3. Securely remove users.
-
 

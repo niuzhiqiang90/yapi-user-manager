@@ -29,7 +29,7 @@ go run main.go add user -u xxx@xxx.com
 ```
 输出
 ```
-Add user success
+Add user successfully.
 Account: xxx@xxx.com
 Password: 1234qwer!@#$
 Please change your password after login
@@ -45,28 +45,11 @@ chmod +x yapi-user-operator
 ```
 输出
 ```
-Add user success
+Add user successfully.
 Account: xxx@xxx.com
 Password: 1234qwer!@#$
 Please change your password after login.
 ```
-
-## 3. 待改进
-1. 用户表中的_id值，参照[Yapi源码](https://github.com/YMFE/yapi/blob/master/server/models/base.js)，发现创建用户时_id并不是每次加1的顺序增长。  
-目前使用随机生成的100以内整数。
-```
-    if (this.isNeedAutoIncrement() === true) {
-      this.schema.plugin(autoIncrement.plugin, {
-        model: this.name,
-        field: this.getPrimaryKey(),
-        startAt: 11,
-        incrementBy: yapi.commons.rand(1, 10)
-      });
-    }
-```
-
-2. 使用了固定的密码，需用户登录后修改密码。
-3. 安全的删除用户。
 
 
 
