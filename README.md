@@ -1,4 +1,6 @@
 # yapi-user-operator
+yapi-user-operator is a simple, easy and fast command line tool for managing yapi users.
+
 [中文](./README-zh.md)
 
 > [YApi](https://github.com/YMFE/yapi) is an efficient, easy-to-use and powerful api management platform designed to provide more elegant interface management services for developers, products and testers. It helps developers to create, publish and maintain APIs easily. YApi also provides an excellent interactive experience for users, and developers can manage interfaces by simply using the interface data writing tools and simple click operations provided by the platform.
@@ -11,8 +13,8 @@ The downside is that there is no entry point for the administrator to add users,
 4. modify the configuration to close the user registration again `"closeRegister":true` 
 6. restart the service again
 
-As we can see from the above steps, a single user creation operation requires two service restarts. This is obviously not very convenient (reasonable).
-If you can login to the server where the Yapi database is situated, or if you have access to the Yapi database, it would be very convenient to manage users directly in the database. It would be great if you could eliminate the need to spell out the database statements to create users and achieve the above function with a single command.
+As we can see from the above steps, a single user creation operation requires two times service restart. This is obviously not very convenient (reasonable).
+If you can login to the server where the Yapi database is situated, or if you have access to the Yapi database, it would be very convenient to manage users directly in the database. It would be great if we could eliminate the need to spell out the database statements to create users and achieve the above function with a single command.
 
 
 ## 2. Usage
@@ -47,7 +49,7 @@ Output
 Add user success
 Account: xxx@xxx.com
 Password: 1234qwer!@#$
-Please change your password after login
+Please change your password after login.
 ```
 
 ## 3. TODO

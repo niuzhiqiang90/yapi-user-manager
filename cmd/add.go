@@ -7,7 +7,7 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"math/rand"
+	"strings"
 	"time"
 
 	"github.com/niuzhiqiang90/yapi-user-operator/config"
@@ -22,9 +22,8 @@ var userName string
 func NewAddCommand() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "add",
-		Short: "",
-		Long: `Add subcommand, user is required
-`,
+		Short: "Add yapi user",
+		Long:  `Add subcommand, user is required.`,
 	}
 
 	cmd.AddCommand(NewAddUserCommand())
@@ -34,8 +33,10 @@ func NewAddCommand() *cobra.Command {
 func NewAddUserCommand() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "user",
-		Short: "Add user to yapi",
-		Long: `For example:
+		Short: "Add yapi user by user's email.",
+		Long: `Add yapi user by user's email.
+		
+For example:
 yapi-user-operator add user -u xxx@xxx.xxx
 yapi-user-operator add user --userName xxx@xxx.xxx`,
 		Run: func(cmd *cobra.Command, args []string) {
@@ -65,28 +66,37 @@ func addUser() {
 	collection := client.Database(DBName).Collection("user")
 	ctx, cancel = context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
-	rand.Seed(time.Now().UnixNano())
-	res, err := collection.InsertOne(ctx, bson.D{
-		{"_id", rand.Intn(100)},
-		{"study", true},
-		{"type", "site"},
-		{"username", userName},
-		{"password", "224179069e921d923a2059de27d60ab2cb58cc4f"},
-		{"email", userName},
-		{"passsalt", "w4byep62al"},
-		{"role", "member"},
-		{"add_time", time.Unix(time.Now().Unix(), 0)},
-		{"up_time", time.Unix(time.Now().Unix(), 0)},
-		{"__v", 0}})
 
-	if err != nil {
-		fmt.Println(err)
-	}
+	var userId int
+	for userId = 20; userId <= 30000; userId++ {
+		res, err := collection.InsertOne(ctx, bson.D{
+			{"_id", userId},
+			{"study", true},
+			{"type", "site"},
+			{"username", userName},
+			{"password", "224179069e921d923a2059de27d60ab2cb58cc4f"},
+			{"email", userName},
+			{"passsalt", "w4byep62al"},
+			{"role", "member"},
+			{"add_time", time.Unix(time.Now().Unix(), 0)},
+			{"up_time", time.Unix(time.Now().Unix(), 0)},
+			{"__v", 0}})
 
-	if res != nil {
-		fmt.Println("Add user success")
-		fmt.Println("Account:", userName)
-		fmt.Println("Password: 1234qwer!@#$")
-		fmt.Println("Please change your password after login")
+		if err != nil && strings.Contains(err.Error(), "_id_ dup key") {
+			continue
+		}
+
+		if err != nil && strings.Contains(err.Error(), "email_1 dup key") {
+			fmt.Printf("Account %s already exists. \n", userName)
+			break
+		}
+
+		if res != nil {
+			fmt.Println("Add user successfully")
+			fmt.Println("Account:", userName)
+			fmt.Println("Password: 1234qwer!@#$")
+			fmt.Println("Please change your password after login.")
+			break
+		}
 	}
 }
