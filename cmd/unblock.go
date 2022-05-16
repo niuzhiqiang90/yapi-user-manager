@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/niuzhiqiang90/yapi-user-operator/config"
@@ -35,19 +36,24 @@ func NewUnBlockUserCommand() *cobra.Command {
 		Use:   "user",
 		Short: "UnBlock user to yapi",
 		Long: `For example:
-yapi-user-manager unblock user -u xxx@xxx.xxx
-yapi-user-manager unblock user --userName xxx@xxx.xxx`,
+yapi-user-manager unblock user -e xxx@xxx.xxx
+yapi-user-manager unblock user --email xxx@xxx.xxx`,
 		Run: func(cmd *cobra.Command, args []string) {
-			if userName == "" {
-				fmt.Println("userName is required")
+			if email == "" {
+				fmt.Println("email is required")
 				fmt.Fprintln(cmd.OutOrStdout(), cmd.UsageString())
 				return
+			}
+
+			if !strings.Contains(email, "@") || !strings.Contains(email, ".") {
+				fmt.Println("Email is invalid")
+				fmt.Fprintln(cmd.OutOrStdout(), cmd.UsageString())
 			}
 			unBlockUser()
 		},
 	}
 
-	cmd.Flags().StringVarP(&userName, "userName", "u", "", "userName (required)")
+	cmd.Flags().StringVarP(&email, "email", "e", "", "email (required)")
 	return cmd
 }
 
@@ -60,8 +66,8 @@ func unBlockUser() {
 		fmt.Println(err)
 		return
 	}
-	DBName := config.GetDBName()
-	collection := client.Database(DBName).Collection("user")
+	dbName := config.GetDBName()
+	collection := client.Database(dbName).Collection("user")
 	ctx, cancel = context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
@@ -69,7 +75,7 @@ func unBlockUser() {
 	var result bson.M
 	err = collection.FindOne(
 		context.TODO(),
-		bson.D{{"email", userName}},
+		bson.D{{"email", email}},
 		findPasswordOpts,
 	).Decode(&result)
 	if err != nil {
@@ -80,13 +86,13 @@ func unBlockUser() {
 	}
 
 	if result["password"].(string)[0] != '!' {
-		fmt.Printf("Account %s is not blocked.\n", userName)
+		fmt.Printf("Account %s is not blocked.\n", email)
 		os.Exit(0)
 	}
 	newPassword := result["password"].(string)[1:]
 
 	opts := options.FindOneAndUpdate().SetUpsert(true)
-	filter := bson.D{{"email", userName}}
+	filter := bson.D{{"email", email}}
 	update := bson.D{{"$set", bson.D{{"password", newPassword}}}}
 	var updatedDocument bson.M
 	err = collection.FindOneAndUpdate(
@@ -101,6 +107,6 @@ func unBlockUser() {
 		}
 		log.Fatal(err)
 	}
-	fmt.Printf("Account %s is unlocked.\n", userName)
+	fmt.Printf("Account %s is unlocked.\n", email)
 
 }

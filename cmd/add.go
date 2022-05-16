@@ -17,7 +17,10 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-var userName string
+var (
+	userName string
+	email    string
+)
 
 func NewAddCommand() *cobra.Command {
 	cmd := &cobra.Command{
@@ -37,19 +40,30 @@ func NewAddUserCommand() *cobra.Command {
 		Long: `Add yapi user by user's email.
 
 For example:
-yapi-user-manager add user -u xxx@xxx.xxx
-yapi-user-manager add user --userName xxx@xxx.xxx`,
+yapi-user-manager add user -u name -e xxx@xxx.xxx
+yapi-user-manager add user --userName name --email xxx@xxx.xxx`,
 		Run: func(cmd *cobra.Command, args []string) {
 			if userName == "" {
 				fmt.Println("userName is required")
 				fmt.Fprintln(cmd.OutOrStdout(), cmd.UsageString())
 				return
 			}
+			if email == "" {
+				fmt.Println("email is required")
+				fmt.Fprintln(cmd.OutOrStdout(), cmd.UsageString())
+				return
+			}
+			if !strings.Contains(email, "@") || !strings.Contains(email, ".") {
+				fmt.Println("Email is invalid")
+				fmt.Fprintln(cmd.OutOrStdout(), cmd.UsageString())
+			}
 			addUser()
 		},
 	}
 
-	cmd.Flags().StringVarP(&userName, "userName", "u", "", "userName (required)")
+	cmd.Flags().StringVarP(&userName, "username", "u", "", "username (required)")
+	cmd.Flags().StringVarP(&email, "email", "e", "", "email (required)")
+
 	return cmd
 }
 
@@ -62,8 +76,8 @@ func addUser() {
 		fmt.Println(err)
 		return
 	}
-	DBName := config.GetDBName()
-	collection := client.Database(DBName).Collection("user")
+	dbName := config.GetDBName()
+	collection := client.Database(dbName).Collection("user")
 	ctx, cancel = context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
@@ -75,7 +89,7 @@ func addUser() {
 			{"type", "site"},
 			{"username", userName},
 			{"password", "224179069e921d923a2059de27d60ab2cb58cc4f"},
-			{"email", userName},
+			{"email", email},
 			{"passsalt", "w4byep62al"},
 			{"role", "member"},
 			{"add_time", time.Unix(time.Now().Unix(), 0)},
@@ -87,13 +101,14 @@ func addUser() {
 		}
 
 		if err != nil && strings.Contains(err.Error(), "email_1 dup key") {
-			fmt.Printf("Account %s already exists. \n", userName)
+			fmt.Printf("Account %s already exists. \n", email)
 			break
 		}
 
 		if res != nil {
 			fmt.Println("Add user successfully.")
-			fmt.Println("Account:", userName)
+			fmt.Println("User:", userName)
+			fmt.Println("Account:", email)
 			fmt.Println("Password: 1234qwer!@#$")
 			fmt.Println("Please change your password after login.")
 			break

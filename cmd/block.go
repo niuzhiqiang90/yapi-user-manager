@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/niuzhiqiang90/yapi-user-operator/config"
@@ -33,23 +34,28 @@ func NewBlockCommand() *cobra.Command {
 func NewBlockUserCommand() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "user",
-		Short: "Block yapi user by userName.",
-		Long: `Block yapi user by userName.
+		Short: "Block yapi user by email.",
+		Long: `Block yapi user by email.
 
 For example:
-yapi-user-manager block user -u xxx@xxx.xxx
-yapi-user-manager block user --userName xxx@xxx.xxx`,
+yapi-user-manager block user -e xxx@xxx.xxx
+yapi-user-manager block user --email xxx@xxx.xxx`,
 		Run: func(cmd *cobra.Command, args []string) {
-			if userName == "" {
-				fmt.Println("userName is required")
+			if email == "" {
+				fmt.Println("email is required")
 				fmt.Fprintln(cmd.OutOrStdout(), cmd.UsageString())
 				return
+			}
+			if !strings.Contains(email, "@") || !strings.Contains(email, ".") {
+				fmt.Println("Email is invalid")
+				fmt.Fprintln(cmd.OutOrStdout(), cmd.UsageString())
 			}
 			blockUser()
 		},
 	}
 
-	cmd.Flags().StringVarP(&userName, "userName", "u", "", "userName (required)")
+	cmd.Flags().StringVarP(&email, "email", "e", "", "email (required)")
+
 	return cmd
 }
 
@@ -71,7 +77,7 @@ func blockUser() {
 	var result bson.M
 	err = collection.FindOne(
 		context.TODO(),
-		bson.D{{"email", userName}},
+		bson.D{{"email", email}},
 		getPasswordOpts,
 	).Decode(&result)
 	if err != nil {
@@ -82,13 +88,13 @@ func blockUser() {
 	}
 
 	if result["password"].(string)[0] == '!' {
-		fmt.Printf("Account %s has been blocked. \n", userName)
+		fmt.Printf("Account %s has been blocked. \n", email)
 		os.Exit(0)
 	}
 	newPassword := "!" + result["password"].(string)
 
 	opts := options.FindOneAndUpdate().SetUpsert(true)
-	filter := bson.D{{"email", userName}}
+	filter := bson.D{{"email", email}}
 	update := bson.D{{"$set", bson.D{{"password", newPassword}}}}
 	var updatedDocument bson.M
 	err = collection.FindOneAndUpdate(
@@ -103,5 +109,5 @@ func blockUser() {
 		}
 		log.Fatal(err)
 	}
-	fmt.Printf("Account %s blocked.\n", userName)
+	fmt.Printf("Account %s blocked.\n", email)
 }

@@ -33,15 +33,15 @@ func NewDeleteCommand() *cobra.Command {
 func NewDeleteUserCommand() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "user",
-		Short: "Delete yapi user by userName.",
-		Long: `Delete yapi user by userName.
+		Short: "Delete yapi user by email.",
+		Long: `Delete yapi user by email.
 
 For example:
 yapi-user-manager delete user -u xxx@xxx.xxx
-yapi-user-manager delete user --userName xxx@xxx.xxx`,
+yapi-user-manager delete user --email xxx@xxx.xxx`,
 		Run: func(cmd *cobra.Command, args []string) {
-			if userName == "" {
-				fmt.Println("userName is required")
+			if email == "" {
+				fmt.Println("email is required")
 				fmt.Fprintln(cmd.OutOrStdout(), cmd.UsageString())
 				return
 			}
@@ -49,7 +49,7 @@ yapi-user-manager delete user --userName xxx@xxx.xxx`,
 		},
 	}
 
-	cmd.Flags().StringVarP(&userName, "userName", "u", "", "userName (required)")
+	cmd.Flags().StringVarP(&email, "email", "e", "", "email (required)")
 	return cmd
 }
 
@@ -62,28 +62,28 @@ func deleteUser() {
 		fmt.Println(err)
 		return
 	}
-	DBName := config.GetDBName()
-	collection := client.Database(DBName).Collection("user")
+	dbName := config.GetDBName()
+	collection := client.Database(dbName).Collection("user")
 	ctx, cancel = context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
 	opts := options.FindOneAndDelete().
-		SetProjection(bson.D{{"email", userName}})
+		SetProjection(bson.D{{"email", email}})
 	var deletedDocument bson.M
 	err = collection.FindOneAndDelete(
 		context.TODO(),
-		bson.D{{"email", userName}},
+		bson.D{{"email", email}},
 		opts,
 	).Decode(&deletedDocument)
 	if err != nil {
 		// ErrNoDocuments means that the filter did not match any documents in
 		// the collection.
 		if err == mongo.ErrNoDocuments && strings.Contains(err.Error(), "mongo: no documents in result") {
-			fmt.Printf("Account %s does not exists. \n", userName)
+			fmt.Printf("Account %s does not exists. \n", email)
 			return
 		}
 
 		log.Fatal(err)
 	}
-	fmt.Printf("Account %s deleted.\n", userName)
+	fmt.Printf("Account %s deleted.\n", email)
 }
