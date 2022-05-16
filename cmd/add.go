@@ -107,7 +107,7 @@ func addUser() {
 
 		if res != nil {
 			fmt.Println("Add user successfully.")
-			fmt.Println("User:", userName)
+			fmt.Println("Username:", userName)
 			fmt.Println("Account:", email)
 			fmt.Println("Password: 1234qwer!@#$")
 			fmt.Println("Please change your password after login.")

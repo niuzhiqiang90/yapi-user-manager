@@ -37,7 +37,7 @@ func NewDeleteUserCommand() *cobra.Command {
 		Long: `Delete yapi user by email.
 
 For example:
-yapi-user-manager delete user -u xxx@xxx.xxx
+yapi-user-manager delete user -e xxx@xxx.xxx
 yapi-user-manager delete user --email xxx@xxx.xxx`,
 		Run: func(cmd *cobra.Command, args []string) {
 			if email == "" {
