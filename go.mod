@@ -1,4 +1,4 @@
-module github.com/niuzhiqiang90/yapi-user-operator
+module github.com/niuzhiqiang90/yapi-user-manager
 
 go 1.18
 

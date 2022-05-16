@@ -7,7 +7,7 @@ package main
 import (
 	"os"
 
-	"github.com/niuzhiqiang90/yapi-user-operator/cmd"
+	"github.com/niuzhiqiang90/yapi-user-manager/cmd"
 )
 
 func main() {

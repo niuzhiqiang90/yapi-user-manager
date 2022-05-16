@@ -12,7 +12,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/niuzhiqiang90/yapi-user-operator/config"
+	"github.com/niuzhiqiang90/yapi-user-manager/config"
 	"github.com/spf13/cobra"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
