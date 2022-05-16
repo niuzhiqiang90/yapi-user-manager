@@ -24,6 +24,7 @@ For more information about yapi, please visit https://github.com/YMFE/yapi
 	rootCmd.AddCommand(NewBlockCommand())
 	rootCmd.AddCommand(NewUnBlockCommand())
 	rootCmd.AddCommand(NewDeleteCommand())
+	rootCmd.AddCommand(NewResetCommand())
 
 	return rootCmd
 }
