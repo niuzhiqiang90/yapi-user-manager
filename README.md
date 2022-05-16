@@ -51,17 +51,24 @@ Password: 1234qwer!@#$
 Please change your password after login.
 ```
 
-### 3.2 Block user
+### 3.2 Reset password
+```
+yapi-user-manager reset password -e xxx@xxx.xxx
+```
+
+### 3.3 Block user
 ```
 yapi-user-manager block user -e xxx@xxx.xxx
 ```
 
-### 3.3 UnBlock user
+### 3.4 UnBlock user
 ```
 yapi-user-manager unblock user -e xxx@xxx.xxx
 ```
 
-### 3.4 Delete user
+### 3.5 Delete user 
 ```
 yapi-user-manager delete user -e xxx@xxx.xxx
 ```
+
+
