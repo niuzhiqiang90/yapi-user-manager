@@ -42,7 +42,7 @@ chmod +x yapi-user-manager
 ```
 yapi-user-manager add user -u name -e xxx@xxx.xxx
 ```
-输出
+Output
 ```
 Add user successfully.
 Username: xxx
