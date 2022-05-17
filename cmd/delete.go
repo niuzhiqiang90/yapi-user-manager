@@ -12,6 +12,7 @@ import (
 	"time"
 
 	"github.com/niuzhiqiang90/yapi-user-manager/config"
+	"github.com/niuzhiqiang90/yapi-user-manager/util"
 	"github.com/spf13/cobra"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -44,6 +45,11 @@ yapi-user-manager delete user --email xxx@xxx.xxx`,
 				fmt.Println("email is required")
 				fmt.Fprintln(cmd.OutOrStdout(), cmd.UsageString())
 				return
+			}
+
+			if !util.VerifyEmailFormat(email) {
+				fmt.Println("Email is invalid")
+				fmt.Fprintln(cmd.OutOrStdout(), cmd.UsageString())
 			}
 			deleteUser()
 		},
